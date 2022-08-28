@@ -1,2 +1,0 @@
-git pull test
-Changes in Github Will pull in local
