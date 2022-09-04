@@ -6,7 +6,7 @@
 #  By: Flavio BC <github.com/GitFlaviobc>             :#::+::#   +#++:++#+  +#+              #
 #                                                    +#+        +#+    +#+ +#+               #
 #  Created: 2022/08/28 14:31:13 by Flavio BC        #+#        #+#    #+# #+#    #+#         #
-#  Updated: 2022/08/28 14:31:13 by Flavio BC       ###        #########   ########           #
+#  Updated: 2022/09/01 12:34:03 by Flavio BC       ###        #########   ########           #
 #  License: MIT                                                                              #
 #                                                                                            #
 # ****************************************************************************************** #
@@ -39,7 +39,7 @@ GOBIN			=	cd $(APP_DIR)$(BIN_DIR) &&
 GOSRC			=	cd $(APP_DIR)$(SRC_DIR) &&
 MV				=	mv
 
-SRC				=	$(MODEL_DIR)test.$(JV) \
+SRC				=	$(MODEL_DIR)Calculation.$(JV) \
 					$(VIEW_DIR)Game.$(JV)
 
 CLASS_FILES		=	$(SRC:.$(JV)=.$(CLASS))
@@ -47,10 +47,11 @@ CLASS_FILES		=	$(SRC:.$(JV)=.$(CLASS))
 SRC_FILES		=	$(addprefix $(APP_DIR)$(SRC_DIR), $(SRC))
 BIN_FILES		=	$(addprefix $(APP_DIR)$(BIN_DIR), $(CLASS_FILES))
 
+
 all: $(APP)
 
 $(APP): $(BIN_FILES)
-	$(GOBIN) $(JAR) $(JARFLAGS) $(NAME).$(JAR) $(VIEW_DIR)$(NAME) $(CLASS_FILES)
+	$(GOBIN) $(JAR) $(JARFLAGS) $(NAME).$(JAR) $(VIEW_DIR)$(NAME) *
 	$(MV) $(APP_DIR)$(BIN_DIR)$(APP) $(APP)
 
 $(BIN_FILES):
@@ -60,7 +61,7 @@ $(BIN_FILES):
 doc: all
 	$(GOSRC) $(JAVADC) $(DOCFLAGS) $(DOC_DIR) $(PKG) $(SUBPKG)
 
-run:
+run: all
 	$(JV) -$(JAR) $(APP)
 
 clean:
