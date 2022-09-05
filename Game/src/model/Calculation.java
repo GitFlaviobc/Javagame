@@ -6,7 +6,7 @@
 /* By: Flavio BC <github.com/GitFlaviobc>             :#::+::#   +#++:++#+  +#+             */
 /*                                                   +#+        +#+    +#+ +#+              */
 /* Created: 2022/08/30 09:29:55 by Flavio BC        #+#        #+#    #+# #+#    #+#        */
-/* Updated: 2022/09/04 19:10:25 by Flavio BC       ###        #########   ########          */
+/* Updated: 2022/09/04 20:33:08 by Flavio BC       ###        #########   ########          */
 /* License: MIT                                                                             */
 /*                                                                                          */
 /* **************************************************************************************** */
@@ -16,11 +16,14 @@ package model;
 import java.util.Random;
 
 public class Calculation {
-	private int		number_a;
-	private int		number_b;
-	private int		result;
+	private Integer	number_a;
+	private Integer	number_b;
+	private Integer	result;
 	private int		op_index;
+	private int		op_increment;
+	private int		op_reduce;
 	private String	op_name;
+	private String	op_formula;
 
 	public	Calculation() {};
 
@@ -41,7 +44,7 @@ public class Calculation {
 	}
 	private int	divide(int a, int b) {
 		this.op_name = "/";
-		return (a / b);
+			return (a / b);
 	}
 
 	private IOperations[] allOperations = new IOperations[4];
@@ -53,25 +56,36 @@ public class Calculation {
 		return allOperations[index].pickOperation(a,b);
 	}
 
+	private String	setFormula() {
+		return (
+			this.number_a.toString() + " " +
+			this.op_name + " " +
+			this.number_b.toString() +  " " +
+			"?"
+			);
+	}
 	public void	setCalculation(int level) {
 		Random	numb_rand = new Random();
 		int	multiplier = 10;
 
-		this.number_a = numb_rand.nextInt((int)Math.pow(multiplier, level));
-		this.number_b = numb_rand.nextInt((int)Math.pow(multiplier, level));
+		this.number_a = numb_rand.nextInt((int)Math.pow(multiplier, level)) + 1;
+		this.number_b = numb_rand.nextInt((int)Math.pow(multiplier, level)) + 1;
 		this.op_index = numb_rand.nextInt(4);
 		this.result = pickOperation(op_index, this.number_a, this.number_b);
+		this.op_formula = setFormula();
+		this.op_increment = (int)Math.pow(2, level - 1);
+		this.op_reduce = 4 - level;
 	}
 	public int	getResult() {
 		return result;
 	}
-	public int	getNumberA() {
-		return number_a;
+	public String getOp_formula() {
+		return op_formula;
 	}
-	public int	getNumberB() {
-		return number_b;
+	public int getOp_increment() {
+		return op_increment;
 	}
-	public String getOp_name() {
-		return op_name;
+	public int getOp_reduce() {
+		return op_reduce;
 	}
 }
